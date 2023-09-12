@@ -337,4 +337,4 @@ main.mainloop()
 
 
 
-
+name = '__main__'
