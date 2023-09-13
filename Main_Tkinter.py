@@ -335,6 +335,3 @@ delete_button.place(x = 10, y = 110)
 # Chạy vòng lặp chính của cửa sổ
 main.mainloop()
 
-
-
-name = '__main__'
