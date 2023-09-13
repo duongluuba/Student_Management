@@ -1,8 +1,9 @@
-from Student import Student
-from Class import PFP191
+
 from tkinter import *
-from tkinter import ttk 
+from tkinter import ttk
 import tkinter as tk
+from PIL import Image, ImageTk
+import math
 import math
 import pyodbc 
 import os 
@@ -66,6 +67,17 @@ cursor.execute('USE [PFP191_Student_Management]')
 ############################### Tạo Tkinter ###############################
 main = Tk()
 main.title('QUẢN LÝ SINH VIÊN')
+#  Lấy ảnh
+path = r'fpt.jpg'
+load = Image.open(path)
+load = load.resize((100, 100))
+render = ImageTk.PhotoImage(load)
+
+# Đặt vị trí ảnh
+img_label = Label(main, image=render)
+img_label.place(x = 600 , y = 20)
+fpt = Label(main, font = ('Arial', 6), text = 'DIT CON ME', fg = 'grey')
+fpt.place(x = 550,  y = 20)
 # Lấy kích thước màn hình
 screen_width = main.winfo_screenwidth()
 screen_height = main.winfo_screenheight()
@@ -104,6 +116,12 @@ class EntryWithPlaceholder(Entry):
 
 # # # # # # # # # # # # Thêm Sinh viên # # # # # # # # # # # #
 def Add_Student():
+    if ID_Exit is not None:
+        ID_Exit.place_forget()
+    if t_delete is not None:
+        t_delete.place_forget()
+    if f_delete is not None:
+        f_delete.place_forget()
     # đặt các nút còn lại chế độ chờ
     menu_button.config(state=tk.DISABLED)
     delete_button.config(state=tk.DISABLED)
@@ -139,9 +157,8 @@ def Add_Student():
     exit_button = Button(main, text="Exit", command = Exit_Add_Student)
     exit_button.place(x = 220, y = 110)
     print("Thêm sinh viên")
-# Lưu vào file
+# kiểm tra ID
 def Check_ID(code):
-    # tạo list lưu dữ liệu
     # lấy dữ liệu
     name_table = 'Student'
     # Thực thi câu lệnh SQL
@@ -153,7 +170,11 @@ def Check_ID(code):
     else:   
         return True
 # end def
+# tạo label hiên thông báo 
+ID_Exit = None
+# Lưu vào SQL server
 def Save_Student():
+    global ID_Exit
     # save file 
     code = id_entry.get().upper()
     # kiểm tra code đã có trong file chưa
@@ -187,9 +208,9 @@ def Save_Student():
         print('Thêm sinh viên thành công')
         Tree_View()
     else:
-        id_exit = Label(main, text ='Mã học sinh đã tồn tại')
-        id_exit.place(x = 150, y = 30)
-        id_exit.after(2000, id_exit.place_forget)
+        ID_Exit = Label(main, text ='Mã học sinh đã tồn tại')
+        ID_Exit.place(x = 150, y = 30)
+        ID_Exit.after(2000, ID_Exit.place_forget)
         print('Thêm sinh viên không thành công')
         Tree_View()
     # Đóng tất cả các trường nhập
@@ -227,6 +248,14 @@ def Exit_Add_Student():
 
 # # # # # # # # # # # # Sắp xếp sinh viên # # # # # # # # # # # #
 def Sort_By_Old():
+    # ẩn cá label thông báo 
+    if ID_Exit is not None:
+        ID_Exit.place_forget()
+    if t_delete is not None:
+        t_delete.place_forget()
+    if f_delete is not None:
+        f_delete.place_forget()
+    # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].old')
     print("Sắp xếp sinh viên theo tuổi")
@@ -242,6 +271,14 @@ def Sort_By_Old():
     conn.commit()
 # end def
 def Sort_By_Lab():
+    # ẩn cá label thông báo 
+    if ID_Exit is not None:
+        ID_Exit.place_forget()
+    if t_delete is not None:
+        t_delete.place_forget()
+    if f_delete is not None:
+        f_delete.place_forget()
+    # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Lab')
     print("Sắp xếp sinh viên theo điểm LAB")
@@ -256,6 +293,14 @@ def Sort_By_Lab():
     conn.commit()
 # end def
 def Sort_By_AVG():
+    # ẩn cá label thông báo 
+    if ID_Exit is not None:
+        ID_Exit.place_forget()
+    if t_delete is not None:
+        t_delete.place_forget()
+    if f_delete is not None:
+        f_delete.place_forget()
+    # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Average')
     print("Sắp xếp sinh viên theo điểm Average")
@@ -273,11 +318,17 @@ def Sort_By_AVG():
 # # # # # # # # # # # # Xóa Sinh viên # # # # # # # # # # # #
 # Danh sách để lưu trữ các nút và Entry
 def Input_ID_Student_Delete():
+    if ID_Exit is not None:
+        ID_Exit.place_forget()
+    if t_delete is not None:
+        t_delete.place_forget()
+    if f_delete is not None:
+        f_delete.place_forget()
     # đặt các nút còn lại ở chế độ chờ
     menu_button.config(state=tk.DISABLED)
     add_button.config(state=tk.DISABLED)
     # đặt biến toàn cầu 
-    global buttons, id_student, exit_button_delete, submit_button_delete
+    global buttons, id_student, exit_button_delete, submit_button_delete 
     buttons = []
     id_student = EntryWithPlaceholder(main, 'ID Student')
     buttons.append(id_student)
@@ -292,7 +343,11 @@ def Input_ID_Student_Delete():
     print("Xóa sinh viên")
     Tree_View()
 # end def
+# tạo 2 biến hiển thị của button xóa khi xóa thành công or không 
+t_delete = None
+f_delete = None
 def Check_ID_Student_Delete():
+    global t_delete, f_delete
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}]')
     conn.commit()
@@ -304,14 +359,14 @@ def Check_ID_Student_Delete():
     if not Check_ID(code): # check xem có ID trong danh sách không >> nếu có thì xóa
         cursor.execute(f'delete from [{name_table}] where Student.StudentID = ?', code)
         conn.commit()
-        t = Label(main, text = "Đã xóa sinh viên")
-        t.place(x = 150, y = 110)
-        t.after(2000, t.place_forget)  # Xóa label sau 2 giây
+        t_delete = Label(main, text = "Đã xóa sinh viên")
+        t_delete.place(x = 150, y = 110)
+        t_delete.after(2000, t_delete.place_forget)  # Xóa label sau 2 giây
         print("Student deleted successfully.")
     else:
-        f = Label(main, text = "Không có sinh viên trong danh sách")
-        f.place(x = 150, y = 110)
-        f.after(2000, f.place_forget)  # Xóa label sau 2 giây
+        f_delete = Label(main, text = "Không có sinh viên trong danh sách")
+        f_delete.place(x = 150, y = 110)
+        f_delete.after(2000, f_delete.place_forget)  # Xóa label sau 2 giây
         print("Student not found.")
     for button in buttons:
         button.place_forget()
@@ -361,14 +416,16 @@ def Tree_View():
     tree.place( x = 10, y = 150)
     conn.commit()
 # end def
+
+# Hiện thị bảng Tree View
 Tree_View()
+
 # # # # # # # # # # # # CÁC NÚT # # # # # # # # # # # #
-# Tạo các nút và gán các hàm tương ứng cho từng nút
 # Nút thêm
-add_button = Button(main, text = "Thêm sinh viên", command = Add_Student)
+add_button = Button(main, text = "Thêm sinh viên", bg = '#EC870E', fg = 'black', command = Add_Student)
 add_button.place(x = 10, y = 30)
 # Nút sắp xếp
-menu_button = tk.Menubutton(main, text = "Sắp xếp theo", relief = tk.RAISED)
+menu_button = tk.Menubutton(main, font = ('Arial', 10), text = "Sắp xếp sinh viên", bg = '#EC870E', fg = 'black', relief = tk.RAISED)
 menu_button.place(x = 10, y = 70)
 menu = tk.Menu(menu_button, tearoff = False) # hàm 'tearoff' để ngăn không cho các chọn sắp xếp tạo thành 1 cửa sổ khác mà chỉ tạo thành một frame
 menu_button['menu'] = menu
@@ -376,10 +433,8 @@ menu.add_command(label="OLD", command = Sort_By_Old)
 menu.add_command(label="LAB", command = Sort_By_Lab)
 menu.add_command(label="AVG", command = Sort_By_AVG)
 # Nút xóa
-delete_button = Button(main, text= "Xóa sinh viên", command = Input_ID_Student_Delete)
+delete_button = Button(main, text= "Xóa sinh viên", bg = '#EC870E', fg = 'black', command = Input_ID_Student_Delete)
 delete_button.place(x = 10, y = 110)
 
 # Chạy vòng lặp chính của cửa sổ
 main.mainloop()
-
-name = '__main__'
