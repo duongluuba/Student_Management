@@ -10,4 +10,3 @@ class Student:
         self.fe = fe
         self.avg = avg
         self.rank = rank
-

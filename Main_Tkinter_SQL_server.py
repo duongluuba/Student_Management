@@ -62,7 +62,6 @@ def Connect_SQL():
     #         cursor.execute('INSERT INTO Student (StudentID, Student_Name, [Old], [Lab], [Practice], [Assignment], [Practice Exam], [Final Exam], [Average], [Rank]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ', code, name, old, lab, pt, assignment, pe, fe, avg, rank)
     #     conn.commit()
 Connect_SQL()
-
 ############################### Tạo Tkinter ###############################
 main = Tk()
 main.title('QUẢN LÝ SINH VIÊN')

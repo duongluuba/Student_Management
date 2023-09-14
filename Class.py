@@ -186,7 +186,6 @@ class PFP191:
                       .format(code, name, old, lab, pt, assignment, pe, fe, avg, rank))
         print()
     # end def
-
     # hàm cập nhập thông tin sinh viên trục tiếp vào file 
     def Update_student(self):
         code = str(input('nhập mă số sinh viên:')).upper()

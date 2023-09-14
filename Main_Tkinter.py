@@ -186,7 +186,6 @@ def Exit_Add_Student():
     delete_button.config(state=tk.NORMAL)
     print("Hủy thêm sinh viên")
 
-
 # # # # # # # # # # # # Sắp xếp sinh viên # # # # # # # # # # # #
 def read_file():
     list_sv = []
