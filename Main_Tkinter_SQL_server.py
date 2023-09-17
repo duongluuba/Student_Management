@@ -896,6 +896,6 @@ menu_find.add_command(label="LAB", command = Input_Student_Find)
 menu_find.add_command(label="AVG", command = Input_Student_Find)
 # Chạy vòng lặp chính của cửa sổ
 main.mainloop()
-
+print('lịch sử')
 if __name__ == '__main__':
     pass
