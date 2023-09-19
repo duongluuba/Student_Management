@@ -460,14 +460,9 @@ def Exit_Student_Update():
 # # # # # # # # # # # # Sắp xếp sinh viên # # # # # # # # # # # #
 def Sort_By_Old():
     # ẩn cá label thông báo 
-    if Result_Add is not None:
-        Result_Add.place_forget()
-    if Result_Delete is not None:
-        Result_Delete.place_forget()
-    if Result_Update is not None:
-        Result_Update.place_forget()
-    if Result_Find is not None:
-        Result_Find.place_forget()
+    for label_result in List_Label_Result: 
+        if label_result is not None:
+            label_result.place_forget() 
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].old')
@@ -485,14 +480,9 @@ def Sort_By_Old():
 # end def
 def Sort_By_Lab():
     # ẩn cá label thông báo 
-    if Result_Add is not None:
-        Result_Add.place_forget()
-    if Result_Delete is not None:
-        Result_Delete.place_forget()
-    if Result_Update is not None:
-        Result_Update.place_forget()
-    if Result_Find is not None:
-        Result_Find.place_forget()
+    for label_result in List_Label_Result: 
+        if label_result is not None:
+            label_result.place_forget() 
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Lab')
@@ -509,14 +499,9 @@ def Sort_By_Lab():
 # end def
 def Sort_By_AVG():
     # ẩn cá label thông báo 
-    if Result_Add is not None:
-        Result_Add.place_forget()
-    if Result_Delete is not None:
-        Result_Delete.place_forget()
-    if Result_Update is not None:
-        Result_Update.place_forget()
-    if Result_Find is not None:
-        Result_Find.place_forget()
+    for label_result in List_Label_Result: 
+        if label_result is not None:
+            label_result.place_forget() 
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Average')
@@ -595,8 +580,8 @@ def Result_Student_Delete():
 # end def
 def Exit_Delete():
     ID_Student_Delete.destroy()
-    Submit_Add_delete.place_forget()
-    Exit_Add_delete.place_forget()
+    Submit_Delete.place_forget()
+    Exit_delete.place_forget()
     # đặt các nút chính chế độ chờ
     for button in List_Main_Button :
         button.config(state = tk.NORMAL)
