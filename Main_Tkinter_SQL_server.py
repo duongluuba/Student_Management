@@ -77,15 +77,15 @@ name = Label(main, font = ('Times New Roman', 14), text = 'DANH SÁCH CÁC TÙY 
 # Đặt nhãn vào  cửa sổ
 name.pack()
 #  Lấy ảnh
-path = r'fpt.jpg'
-load = Image.open(path)
-load = load.resize((300, 200))
-render = ImageTk.PhotoImage(load)
+# path = r'fpt.jpg'
+# load = Image.open(path)
+# load = load.resize((300, 200))
+# render = ImageTk.PhotoImage(load)
 # Đặt vị trí ảnh
-img_label = Label(main, image=render)
-img_label.place(x = 660 , y = 40)
-fpt = Label(main, font = ('Arial', 6), text = 'DIT CON ME', fg = 'grey')
-fpt.place(x = 600,  y = 40)
+# img_label = Label(main, image=render)
+# img_label.place(x = 660 , y = 40)
+# fpt = Label(main, font = ('Arial', 6), text = 'DIT CON ME', fg = 'grey')
+# fpt.place(x = 600,  y = 40)
 # tạo class dùng để hiện phần gợi ý trong mỗi button
 class EntryWithPlaceholder(Entry):
         def __init__(self, master = None, placeholder = "INPUT", color = 'grey'):
@@ -125,9 +125,11 @@ def Add_Student():
     for button in List_Main_Button :
         button.config(state=tk.DISABLED)
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     
     # nhập 
     global ID_Student_Add, Name_Add, Old_Add, Lab_Add, PT_Add, Ass_Add, PE_Add, FE_Add, Submit_Add, Exit_Add, List_Entry_Add
@@ -296,9 +298,11 @@ def Update_Student():
         button.config(state=tk.DISABLED)
     #  đóng các Button/ Label trước đó đã mở 
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     global List_Entry_Update, ID_Student_Update, Search_Update, Exit_Search_Update
     List_Entry_Update = []
     ID_Student_Update = EntryWithPlaceholder(main, 'Student ID Search')
@@ -460,9 +464,11 @@ def Exit_Student_Update():
 # # # # # # # # # # # # Sắp xếp sinh viên # # # # # # # # # # # #
 def Sort_By_Old():
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].old')
@@ -480,9 +486,11 @@ def Sort_By_Old():
 # end def
 def Sort_By_Lab():
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Lab')
@@ -499,9 +507,11 @@ def Sort_By_Lab():
 # end def
 def Sort_By_AVG():
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # kết nốt sql 
     name_table = 'Student'
     cursor.execute(f'select * from [{name_table}] order by [Student].Average')
@@ -519,6 +529,7 @@ def Sort_By_AVG():
 
 # # # # # # # # # # # # Xóa Sinh viên # # # # # # # # # # # #
 Result_Delete = None
+List_Button_Of_Delete = []
 # Danh sách để lưu trữ các nút và Entry
 def Input_ID_Student_Delete():
     # đặt các nút chính chế độ chờ
@@ -536,11 +547,12 @@ def Input_ID_Student_Delete():
     ID_Student_Delete.place(x = 110, y = 115)
     # button submit 
     Submit_Delete  = Button(main, text="Submit", command = Result_Student_Delete)
-    List_Button_Of_Main.append(Submit_Delete )
+    List_Button_Of_Delete.append(Submit_Delete )
     Submit_Delete .place(x = 250, y = 110)
+    main.bind('<Return>', lambda event=None: Submit_Delete.invoke())
     # button exit 
     Exit_delete = Button(main, text="Exit", command = Exit_Delete)
-    List_Button_Of_Main.append(Exit_delete)
+    List_Button_Of_Delete.append(Exit_delete)
     Exit_delete.place(x = 320, y = 110)
     print("Xóa sinh viên")
 # end def
@@ -571,7 +583,7 @@ def Result_Student_Delete():
     for button in List_Entry_Delete:
         button.place_forget()
     # đóng nút submit và exit 
-    for s_e in List_Button_Of_Main:
+    for s_e in List_Button_Of_Delete:
         s_e.place_forget()
     # đặt các nút chính về chế độ bình thường
     for button in List_Main_Button :
@@ -599,9 +611,11 @@ def Input_Old_Student_Find():
     for button in List_Main_Button :
         button.config(state=tk.DISABLED)
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # đặt biến toàn cầu 
     global Student_Find, Exit_Find, Submit_Find 
     Student_Find = EntryWithPlaceholder(main, 'Old')
@@ -617,9 +631,11 @@ def Result_Find_Student_Old():
     if Result_Find_Check is not None:
         Result_Find_Check.place_forget()
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # tìm kiếm 
     Old = Student_Find.get()
     try:
@@ -666,9 +682,11 @@ def Input_Lab_Student_Find():
     for button in List_Main_Button :
         button.config(state=tk.DISABLED)
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # đặt biến toàn cầu 
     global Student_Find, Exit_Find, Submit_Find 
     Student_Find = EntryWithPlaceholder(main, 'LAB')
@@ -684,9 +702,11 @@ def Result_Find_Student_Lab():
     if Result_Find_Check is not None:
         Result_Find_Check.place_forget()
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # tìm kiếm 
     lab = Student_Find.get()
     try:
@@ -733,9 +753,11 @@ def Input_Student_Find():
     for button in List_Main_Button :
         button.config(state=tk.DISABLED)
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # đặt biến toàn cầu 
     global Student_Find, Exit_Find, Submit_Find 
     Student_Find = EntryWithPlaceholder(main, 'AVG')
@@ -751,9 +773,11 @@ def Result_Find_Student_AVG():
     if Result_Find_Check is not None:
         Result_Find_Check.place_forget()
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     # tìm kiếm 
     avg = Student_Find.get()
     try:
@@ -797,9 +821,11 @@ def Result_Find_Student_AVG():
 # end def
 def Exit_Find_Student():
     # ẩn cá label thông báo 
+    global List_Label_Result
     for label_result in List_Label_Result: 
         if label_result is not None:
             label_result.place_forget() 
+    List_Label_Result = []
     for label in List_Entry_Search:
             label.place_forget()
     Submit_Find.place_forget()
@@ -879,8 +905,10 @@ Find_Button['menu'] = menu_find
 menu_find.add_command(label="OLD", command = Input_Old_Student_Find)
 menu_find.add_command(label="LAB", command = Input_Student_Find)
 menu_find.add_command(label="AVG", command = Input_Student_Find)
-# Chạy vòng lặp chính của cửa sổ
+
+
+print('START')
 main.mainloop()
-print('lịch sử')
+print('END')
 if __name__ == '__main__':
     pass
