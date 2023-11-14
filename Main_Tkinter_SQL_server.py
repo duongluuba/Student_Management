@@ -126,8 +126,8 @@ def Add_Student():
         button.config(state=tk.DISABLED)
     # ẩn cá label thông báo 
     global List_Label_Result
-    for label_result in List_Label_Result: 
-        if label_result is not None:
+    for label_result in List_Label_Result:
+        if label_result.winfo_exists():
             label_result.place_forget() 
     List_Label_Result = []
     
@@ -300,7 +300,7 @@ def Update_Student():
     # ẩn cá label thông báo 
     global List_Label_Result
     for label_result in List_Label_Result: 
-        if label_result is not None:
+        if label_result.winfo_exists():
             label_result.place_forget() 
     List_Label_Result = []
     global List_Entry_Update, ID_Student_Update, Search_Update, Exit_Search_Update
