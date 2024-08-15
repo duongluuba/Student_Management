@@ -170,6 +170,7 @@ def Add_Student():
     # tạo nút submit
     Submit_Add = Button(main, text="Submit", command = Save_Student)
     Submit_Add.place(x = 150, y = 190)
+    main.bind('<Return>', lambda event=None: Submit_Add.invoke())
     List_Button_Of_Main.append(Submit_Add)
     # tạo nút exit 
     Exit_Add = Button(main, text="Exit", command = Exit_Add_Student)
@@ -209,17 +210,15 @@ def Save_Student():
         #     Result_Check_Name.place(x = 150, y = 90)
         #     Result_Check_Name.after(2000, Result_Check_OLD.place_forget)
         old = Old_Add.get()
-        try:
-            old = int(Old_Add.get())
-        except ValueError:
-            Result_Check_OLD = Label(main, text = 'Nhập lại tuổi')
-            Result_Check_OLD.place(x = 150, y = 130)
-            Result_Check_OLD.after(5000, Result_Find_Check.place_forget)
+        # try:
+        #     old = int(Old_Add.get())
+        # except ValueError:
+        #     Result_Check_OLD = Label(main, text = 'Nhập lại tuổi')
+        #     Result_Check_OLD.place(x = 150, y = 130)
 
         if old in ('OLD', 'INPUT', '', 0) or old != int(Old_Add.get()):
             Result_Check_OLD = Label(main, text = 'Nhập lại tuôi')
             Result_Check_OLD.place(x = 150, y = 130)
-            Result_Check_OLD.after(5000, Result_Find_Check.place_forget)
         else:
             lab = (Lab_Add.get())
             if lab == 'LAB': 
@@ -311,13 +310,15 @@ def Update_Student():
     # tạo nút search
     Search_Update = Button(main, text ='Search', command = Check_ID_Update)
     Search_Update.place(x = 300, y = 150)
+    main.bind('<Return>', lambda event=None: Search_Update.invoke())
     List_Button_Of_Main.append(Search_Update)
+    
     # tạo nút exit 
     Exit_Search_Update = Button(main, text="Exit", command = Exit_Search_Update_Student)
     Exit_Search_Update.place(x = 370, y = 150)
     List_Button_Of_Main.append(Exit_Search_Update)
 # end def
-# nút này dùng để khí bạn chọn nhưng không muốn update nữa 
+# nút này dùng để khi bạn chọn nhưng không muốn update nữa 
 def Exit_Search_Update_Student():
     for entry_update in List_Entry_Update:
         entry_update.destroy()
@@ -367,6 +368,7 @@ def Check_ID_Update():
         # tạo nút submit
         Submit_Update = Button(main, text="Submit", command = Save_Update_Student)
         Submit_Update.place(x = 150, y = 190)
+        main.bind('<Return>', lambda event=None: Submit_Update.invoke())
         # tạo nút exit 
         Exit_Update = Button(main, text="Exit", command = Exit_Student_Update)
         Exit_Update.place(x = 220, y = 190)
@@ -526,6 +528,8 @@ def Sort_By_AVG():
     tree.place( x = 10, y = 250, width = 980, height = 300)
     conn.commit()
 # end def
+
+
 
 # # # # # # # # # # # # Xóa Sinh viên # # # # # # # # # # # #
 Result_Delete = None
